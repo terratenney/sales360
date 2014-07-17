@@ -9,7 +9,7 @@ from sklearn.metrics import roc_curve, auc
 from sklearn.preprocessing import scale
 from sklearn.cross_validation import train_test_split
 from sklearn import cross_validation
-from sklearn import cross_validation
+from sklearn import metrics
 
 class AnalyzeModel(object):
     '''
