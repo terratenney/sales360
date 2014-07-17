@@ -12,11 +12,12 @@ from sklearn import cross_validation
 from sklearn import metrics
 
 class AnalyzeModel(object):
-    '''
+    """
     A class analyze model.
-    '''
+    """
     def __init__(self):
-        self.X = None  # Build the new dataframe
+        self.features = [] # list of features
+        self.impfeatures = []  # list of important features
         
         
 
@@ -41,6 +42,7 @@ class AnalyzeModel(object):
         print "precision of model", metrics.precision_score(y_test, y_pred, average='weighted')
         print "f score of model", metrics.f1_score(y_test, y_pred, average='weighted') 
         print "recall of model", metrics.recall_score(y_test, y_pred, average='weighted')
-        return features
+        
+        return clf
 
 

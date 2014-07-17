@@ -1,0 +1,5 @@
+** with data forward fill **
+Area under the ROC curve : 0.791870
+precision of model 0.519639065817
+f score of model 0.288982362925
+recall of model 0.200143105387
