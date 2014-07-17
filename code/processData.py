@@ -12,6 +12,8 @@ class ProcessData(object):
     '''
     def __init__(self):
         self.df = None  # Build the new dataframe 
+        self.columns = None
+        self.dropColumns = ['record_type','day','time','state','car_value']
 
     def getData(self, filename):
 	    df = pd.read_csv("../data/train.csv")
@@ -23,11 +25,15 @@ class ProcessData(object):
 
 
     def cleanData(self,df):
+        """
+        Clean Data and backfill values to keep the data for better model
+        """
 
-    	#df = df.fillna(df.mean())
-        df = df.dropna()
+    	df = df.fillna(method = 'pad')
     	y = df.record_type.values
-    	df = df.drop(['record_type','day','time','state','car_value'], axis=1)
+        self.columns = df.columns
+    	df = df.drop(self.dropColumns, axis=1)
+        
     	X = np.array(df)
     	return X,y
 

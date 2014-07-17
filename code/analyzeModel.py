@@ -16,7 +16,9 @@ class AnalyzeModel(object):
     A class analyze model.
     '''
     def __init__(self):
-        self.X = None  # Build the new dataframe 
+        self.X = None  # Build the new dataframe
+        
+        
 
     def getScore(self, clf,X,y):
         scores = cross_validation.cross_val_score(clf, X, y, cv=5)
@@ -39,6 +41,6 @@ class AnalyzeModel(object):
         print "precision of model", metrics.precision_score(y_test, y_pred, average='weighted')
         print "f score of model", metrics.f1_score(y_test, y_pred, average='weighted') 
         print "recall of model", metrics.recall_score(y_test, y_pred, average='weighted')
-        return
+        return features
 
 

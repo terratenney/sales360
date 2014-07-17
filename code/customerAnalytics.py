@@ -20,6 +20,7 @@ def customerAnalytics():
 
 	data = ProcessData()
 	df_train = data.getData(train_data)
+	pdb.set_trace()
 	X,y = data.cleanData(df_train)
 
 	# Build a Baseline Model
@@ -27,6 +28,13 @@ def customerAnalytics():
 	clf = RandomForestClassifier(verbose=10, n_estimators=10, n_jobs=-1, max_features=5)
 	model = AnalyzeModel()
 	model.getScore(clf,X,y)
+	"""
+	Area under the ROC curve : 0.794343
+	precision of model 0.518552450756
+	f score of model 0.270716250149
+	recall of model 0.183171521036
+
+	"""
 
 
 if __name__ == "__main__":
