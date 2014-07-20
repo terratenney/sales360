@@ -2,8 +2,6 @@ import pandas as pd
 import sys, getopt
 import json
 import numpy as np
-import pandas as pd
-import json
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 import pdb
@@ -26,7 +24,7 @@ def customerAnalytics():
 	data = ProcessData()
 	df_train = data.getData(train_data)
 	df_train = data.cleanData(df_train)
-	pdb.set_trace()
+	#pdb.set_trace()
 	X,y= data.featurizeData(df_train)
 	del df_train # memory optimization
 
@@ -44,6 +42,12 @@ def customerAnalytics():
 	recall of model 0.183171521036
 
 	"""
+
+	"""
+	Build a pickle for web app to start the purchase prediction
+
+	"""
+	cp.dump(clf, open( 'predict-purchase', "wb"))
 
 
 if __name__ == "__main__":

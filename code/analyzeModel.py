@@ -2,8 +2,6 @@
 Description: Load and clean data from csv files.
 """
 
-from collections import Counter
-import pandas as pd
 import numpy as np
 from sklearn.metrics import roc_curve, auc
 from sklearn.preprocessing import scale
@@ -42,7 +40,7 @@ class AnalyzeModel(object):
         print "precision of model", metrics.precision_score(y_test, y_pred, average='weighted')
         print "f score of model", metrics.f1_score(y_test, y_pred, average='weighted') 
         print "recall of model", metrics.recall_score(y_test, y_pred, average='weighted')
-        
+
         return clf
 
 
