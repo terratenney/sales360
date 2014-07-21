@@ -25,10 +25,10 @@ class AnalyzeModel(object):
         print "%s -- %s" % (clf.__class__, np.mean(scores))
         
 
-        """ fit and predict model """
+        #fit and predict model
         clf.fit(X_train, y_train)
 
-        """ gather predict probas to evaluate scores """
+        #gather predict probas to evaluate scores
 
         probas_ = clf.predict_proba(X_test)
         y_pred = clf.predict(X_test)
