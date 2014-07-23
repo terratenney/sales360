@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sales Quoting Application</title>
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<style type="text/css">
+    .bs-example{
+    	margin: 20px;
+    }
+</style>
+</head>
+<body>
+<div class="bs-example">
+    <table class="table table-hover">
+        <thead>
+
+            <tr>
+                <th>Date Time</th>
+                <th>Customer ID</th>
+                <th>Location</th>
+                <th>Group Size</th>
+                <th>Risk Factor</th>
+                <th>Conversion Score</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for quote in quotes %}
+            <tr>
+                <td>{{ quote.date_time }}</td>
+                <td>{{ quote.customer_ID }}</td>
+                <td>{{ quote.location }}</td>
+                <td>{{ quote.group_size }}</td>
+                <td>{{ quote.risk_factor }}</td>
+                <td>{{ quote.conversion_score}}</td>
+            </tr>
+            {% endfor %}
+
+        </tbody>
+    </table>
+</div>
+</body>
+</html>                                		

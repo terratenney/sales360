@@ -1,6 +1,5 @@
 import os
 from urlparse import urlparse
-from flask import Flask
 from pymongo import Connection
 import pdb
 import pandas as pd
@@ -9,6 +8,9 @@ import json
 import datetime
 from random import randint
 import numpy as np
+import datetime
+from flask import Flask, render_template, request, redirect
+#import pymongo
  
 MONGO_URL = os.environ.get('MONGOHQ_URL')
  
@@ -30,7 +32,7 @@ load API to load the test data to mongo DB for dashboard
 '''
 
 @app.route('/load')
-def hello():
+def load():
   
   df = pd.read_csv("../data/test_small.csv")
   print df.head
@@ -71,24 +73,21 @@ def predict():
  
   df = pd.DataFrame(itemlist,collist)
   #pdb.set_trace()
-  #df = pd.DataFrame.from_dict(myObj,index='_id')
-  #df = df.drop('_id',axis=1)
-  print df.shape
   df = df.T
-  print df.shape
-  print df.columns
   df.drop('_id', axis=1, inplace=True)
-  print df.shape
   X = np.array(df)
-  print X.T
   y_pred = 0
   y_pred_proba= model.predict_proba(X)
   #y_pred = model.predict(X)
+  conversion_score = float((y_pred_proba[:,1])*100)
+  myObj['conversion_score'] = conversion_score
+  myObj['date_time'] = datetime.datetime.now()
+  db.analytics.save(myObj)
 
   html ='<body style="font-family:sans-serif;">'
   html += '<table>'
   html += '<tr>'
-  html +='<td>%s</a></td><td align="center" style=\"%s\">%.1f' % (customer_id,loc,float(y_pred_proba[:,1])*100) + '%</td>'
+  html +='<td>%s </a></td><td align="center" style=\"%s\">%.1f' % (customer_id,loc,conversion_score) + '</td>'
   html += '</tr>'
   html += '</table>'
   html += '</body>'
@@ -99,16 +98,38 @@ def predict():
 '''
 Dashboard to check the Quote Status
 '''
-@app.route('/view')
-def view():
+@app.route('/dashboard')
+def dashboard():
   print "Viewing records"
-  rec = randint(0,db.test.find().count())
-  myObj = db.test.find().limit(-1).skip(rec).next()
-  customer_id = str(myObj['customer_ID']) 
-  loc = str(myObj['location'])
-  print myObj
+  #rec = randint(0,db.test.find().count())
+  #quotes = db.analytics.find().sort([("date_time", pymongo.DESCENDING)]).limit(1)
+  cur = db.analytics.find()
+  quotes = cur[:]
+  print quotes
+  quote = quotes[1]
+  #quote = quotes.next()
+  #myObj = db.test.find().limit(-1).skip(rec).next()
+  date_t = str(quote['date_time'])
+  customer_id = str(quote['customer_ID']) 
+  loc = str(quote['location'])
+  gz = str(quote['group_size'])
+  risk_factor = str(quote['risk_factor'])
+  conversion_score = str(quote['conversion_score'])
+  df = pd.DataFrame.from_dict(quote, orient='index')
+  data = df.T
+  return render_template('dashboard.html',quotes=quotes)
 
-  return "Customer_ID:" + customer_id + "location:" + loc
+  #return "Customer_ID:" + customer_id + "location:" + loc
+
+'''
+Flush Dashboard to clean up the old records.
+Utility to clean and run the data load again
+'''
+@app.route('/flush')
+def view():
+  print "Flushing records"
+  db.analytics.remove()
+  return "Flushed analytics data!!"
 
 
 if __name__ == '__main__':
