@@ -36,7 +36,7 @@ def load():
   
   df = pd.read_csv("../data/test_small.csv")
   print df.head
-  impfeatures = ['shopping_pt','customer_ID','cost','location','age_youngest','age_oldest','car_age','duration_previous','risk_factor','C_previous','G','group_size']
+  impfeatures = ['state','shopping_pt','customer_ID','cost','location','age_youngest','age_oldest','car_age','duration_previous','risk_factor','C_previous','G','group_size']
 
   print "hello"
   df_test = df[impfeatures]
@@ -76,6 +76,7 @@ def predict():
   #pdb.set_trace()
   df = df.T
   df.drop('_id', axis=1, inplace=True)
+  df.drop('state', axis=1, inplace=True)
   X = np.array(df)
   y_pred = 0
   y_pred_proba= model.predict_proba(X)
@@ -105,18 +106,19 @@ Dashboard to check the Quote Status
 def dashboard():
   print "Viewing records"
   #pdb.set_trace()
-  cur = db.analytics.find()
+  cur = db.analytics.find().limit(8)
+  #cur = db.analytics.find().sort({ 'date_time' : -1 }).limit(8)
 
   quotes = cur[:]
-  quote = quotes[1]
-  date_t = str(quote['date_time'])
-  customer_id = str(quote['customer_ID']) 
-  loc = str(quote['location'])
-  gz = str(quote['group_size'])
-  risk_factor = str(quote['risk_factor'])
-  conversion_score = str(quote['conversion_score'])
-  df = pd.DataFrame.from_dict(quote, orient='index')
-  data = df.T
+  # quote = quotes[1]
+  # date_t = str(quote['date_time'])
+  # customer_id = str(quote['customer_ID']) 
+  # loc = str(quote['location'])
+  # gz = str(quote['group_size'])
+  # risk_factor = str(quote['risk_factor'])
+  # conversion_score = str(quote['conversion_score'])
+  # df = pd.DataFrame.from_dict(quote, orient='index')
+  # data = df.T
   return render_template('dashboard2.html',quotes=quotes)
 
 '''

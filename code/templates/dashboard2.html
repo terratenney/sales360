@@ -49,7 +49,7 @@
                                 <tr>
                                     <th>Date Time</th>
                                     <th>Customer ID</th>
-                                    <th>Location</th>
+                                    <th>State</th>
                                     <th>Group Size</th>
                                     <th>Risk Factor</th>
                                     <th>Conversion Score</th>
@@ -60,7 +60,7 @@
                                 <tr>
                                     <td>{{ quote.date_time }}</td>
                                     <td>{{ quote.customer_ID }}</td>
-                                    <td>{{ quote.location }}</td>
+                                    <td>{{ quote.state }}</td>
                                     <td>{{ quote.group_size }}</td>
                                     <td>{{ quote.risk_factor }}</td>
                                     <td>{{ quote.conversion_score}}</td>
@@ -74,22 +74,96 @@
 
                    <div class="col-md-6">
                         <h5>Conversion Rate</h5>
-                        <div class="progress progress-striped">
-                            <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                <span class="sr-only">40% Complete (success)</span>
-                            </div>
-                        </div>
-                        <div class="progress progress-striped active">
-                            <div class="progress-bar progress-bar-primary" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                <span class="sr-only">20% Complete</span>
-                            </div>
-                        </div>
+                           <script type="text/javascript" src="//www.google.com/jsapi"></script>
+                            <script type="text/javascript">
+                            google.load('conversion', '1', {packages: ['motionchart']});
 
+                            function drawVisualization() {
+                              var data = new google.visualization.DataTable();
+                              data.addColumn('string', 'Fruit');
+                              data.addColumn('date', 'Date');
+                              data.addColumn('number', 'Sales');
+                              data.addColumn('number', 'Expenses');
+                              data.addColumn('string', 'Location');
+                              data.addRows([
+                                ['Apples', new Date(1988,0,1), 1000, 300, 'East'],
+                                ['Oranges', new Date(1988,0,1), 950, 200, 'West'],
+                                ['Bananas', new Date(1988,0,1), 300, 250, 'West'],
+                                ['Apples', new Date(1988,1,1), 1200, 400, 'East'],
+                                ['Oranges', new Date(1988,1,1), 900, 150, 'West'],
+                                ['Bananas', new Date(1988,1,1), 788, 617, 'West']
+                              ]);
+                            
+                              var motionchart = new google.visualization.MotionChart(
+                                  document.getElementById('conversion'));
+                              motionchart.draw(data, {'width': 200, 'height': 50});
+                            }
+                            
+
+                            google.setOnLoadCallback(drawVisualization);
+                          </script>
+                        <div id="conversion" style="width: 200px; height: 50px;"></div>
 
                     </div>
 
                 </div>
 
+                <hr />
+
+                    <script type="text/javascript" src="//www.google.com/jsapi"></script>
+                      <script type="text/javascript">
+                        google.load('visualization', '1', {packages: ['geomap']});
+
+                         
+                        function drawVisualization() {
+                          var data = google.visualization.arrayToDataTable([
+                            ['State', 'Customer Base'],
+                            ['US-WA', 25188],
+                            ['US-DE', 4101],
+                            ['US-DC', 3748],
+                            ['US-WI', 10103],
+                            ['US-WV', 5053],
+                            ['US-FL', 106287],
+                            ['US-WY', 1163],
+                            ['US-NH', 7988],
+                            ['US-NM', 6790],
+                            ['US-ND', 2487],
+                            ['US-NE', 3121],
+                            ['US-TN', 18099],
+                            ['US-NY', 91627],
+                            ['US-PA', 60677],
+                            ['US-RI', 5887],
+                            ['US-NV', 15459],
+                            ['US-CO', 24409],
+                            ['US-AL', 23560],
+                            ['US-AR', 10460],
+                            ['US-GA', 8802],
+                            ['US-IN', 25295],
+                            ['US-IA', 4545],
+                            ['US-ID', 6110],
+                            ['US-CT', 19353],
+                            ['US-ME', 6800],
+                            ['US-MD', 28443],
+                            ['US-OK', 13779],
+                            ['US-OH', 44537],
+                            ['US-UT', 14820],
+                            ['US-MO', 15243],
+                            ['US-KS', 5585],
+                            ['US-MT', 3332],
+                            ['US-MS', 10722],
+                            ['US-KY', 16100],
+                            ['US-OR', 15068],
+                            ['US-SD', 508]
+                          ]);
+                         
+                          var geochart = new google.visualization.GeoChart(
+                              document.getElementById('visualization'));
+                          geochart.draw(data, {width: 556, height: 347, region: "US", resolution: "provinces"});
+                        }
+
+                        google.setOnLoadCallback(drawVisualization);
+                      </script>
+                    <div id="visualization" style="width: 800px; height: 400px;"></div>
 
 
                 <!-- /. ROW  -->
