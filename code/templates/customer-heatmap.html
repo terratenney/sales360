@@ -1,0 +1,68 @@
+<!--
+You are free to copy and use this sample in accordance with the terms of the
+Apache license (http://www.apache.org/licenses/LICENSE-2.0.html)
+-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+  <title>Google Visualization API Sample</title>
+  <script type="text/javascript" src="//www.google.com/jsapi"></script>
+  <script type="text/javascript">
+    google.load('visualization', '1', {packages: ['geomap']});
+
+     
+    function drawVisualization() {
+      var data = google.visualization.arrayToDataTable([
+        ['State', 'Customer Base'],
+        ['US-WA', 25188],
+        ['US-DE', 4101],
+        ['US-DC', 3748],
+        ['US-WI', 10103],
+        ['US-WV', 5053],
+        ['US-FL', 106287],
+        ['US-WY', 1163],
+        ['US-NH', 7988],
+        ['US-NM', 6790],
+        ['US-ND', 2487],
+        ['US-NE', 3121],
+        ['US-TN', 18099],
+        ['US-NY', 91627],
+        ['US-PA', 60677],
+        ['US-RI', 5887],
+        ['US-NV', 15459],
+        ['US-CO', 24409],
+        ['US-AL', 23560],
+        ['US-AR', 10460],
+        ['US-GA', 8802],
+        ['US-IN', 25295],
+        ['US-IA', 4545],
+        ['US-ID', 6110],
+        ['US-CT', 19353],
+        ['US-ME', 6800],
+        ['US-MD', 28443],
+        ['US-OK', 13779],
+        ['US-OH', 44537],
+        ['US-UT', 14820],
+        ['US-MO', 15243],
+        ['US-KS', 5585],
+        ['US-MT', 3332],
+        ['US-MS', 10722],
+        ['US-KY', 16100],
+        ['US-OR', 15068],
+        ['US-SD', 508]
+      ]);
+     
+      var geochart = new google.visualization.GeoChart(
+          document.getElementById('visualization'));
+      geochart.draw(data, {width: 556, height: 347, region: "US", resolution: "provinces"});
+    }
+
+    google.setOnLoadCallback(drawVisualization);
+  </script>
+</head>
+<body style="font-family: Arial;border: 0 none;">
+<div id="visualization" style="width: 800px; height: 400px;"></div>
+</body>
+</html>

@@ -45,6 +45,7 @@ def load():
 
   #pdb.set_trace()
   records = json.loads(df_test.T.to_json()).values()
+  db.test.remove()
   db.test.insert(records)
 
  
@@ -81,7 +82,9 @@ def predict():
   #y_pred = model.predict(X)
   conversion_score = float((y_pred_proba[:,1])*100)
   myObj['conversion_score'] = conversion_score
-  myObj['date_time'] = datetime.datetime.now()
+  #dt = datetime.datetime.now()(microsecond=0)
+  #ts = dateti(microsecond=0)
+  myObj['date_time'] = datetime.datetime.now().replace(microsecond=0)
   db.analytics.save(myObj)
 
   html ='<body style="font-family:sans-serif;">'
@@ -92,7 +95,7 @@ def predict():
   html += '</table>'
   html += '</body>'
 
-  return html
+  return redirect('/dashboard')
 
 
 '''
@@ -101,14 +104,11 @@ Dashboard to check the Quote Status
 @app.route('/dashboard')
 def dashboard():
   print "Viewing records"
-  #rec = randint(0,db.test.find().count())
-  #quotes = db.analytics.find().sort([("date_time", pymongo.DESCENDING)]).limit(1)
+  #pdb.set_trace()
   cur = db.analytics.find()
+
   quotes = cur[:]
-  print quotes
   quote = quotes[1]
-  #quote = quotes.next()
-  #myObj = db.test.find().limit(-1).skip(rec).next()
   date_t = str(quote['date_time'])
   customer_id = str(quote['customer_ID']) 
   loc = str(quote['location'])
@@ -117,9 +117,7 @@ def dashboard():
   conversion_score = str(quote['conversion_score'])
   df = pd.DataFrame.from_dict(quote, orient='index')
   data = df.T
-  return render_template('dashboard.html',quotes=quotes)
-
-  #return "Customer_ID:" + customer_id + "location:" + loc
+  return render_template('dashboard2.html',quotes=quotes)
 
 '''
 Flush Dashboard to clean up the old records.
