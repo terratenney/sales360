@@ -10,6 +10,7 @@ from random import randint
 import numpy as np
 import datetime
 from flask import Flask, render_template, request, redirect
+
 #import pymongo
  
 MONGO_URL = os.environ.get('MONGOHQ_URL')
@@ -50,18 +51,18 @@ def load():
 
  
   return 'Processed all records!!'
+
+
 '''
  Predict API for predicting the quote conversion
 '''
 @app.route('/predict')
 def predict():
-  print "Predict Purchase"
+
   rec = randint(0,db.test.find().count())
   myObj = db.test.find().limit(-1).skip(rec).next()
-  #cursor = user_coll.find()
   customer_id = str(myObj['customer_ID']) 
   loc = str(myObj['location'])
-  print myObj
 
   df = pd.DataFrame()
   itemlist = []
@@ -70,8 +71,7 @@ def predict():
     k,v = t
     collist.append(k)
     itemlist.append(v)
-    #df[k] = v
- 
+    #df[k] =  
   df = pd.DataFrame(itemlist,collist)
   #pdb.set_trace()
   df = df.T
@@ -81,11 +81,19 @@ def predict():
   y_pred = 0
   y_pred_proba= model.predict_proba(X)
   #y_pred = model.predict(X)
-  conversion_score = float((y_pred_proba[:,1])*100)
+  conversion_score = int((y_pred_proba[:,1])*100)
   myObj['conversion_score'] = conversion_score
-  #dt = datetime.datetime.now()(microsecond=0)
-  #ts = dateti(microsecond=0)
   myObj['date_time'] = datetime.datetime.now().replace(microsecond=0)
+  ## Add test recommendations for now and replace with trained model
+  #pdb.set_trace()
+
+  recommendations = db.recs
+
+  rec = recommendations.find_one({'customer_ID': int(customer_id)},{'recommendation1': 1, 'recommendation2' :1})
+  print rec 
+  myObj['recommendation1'] = rec['recommendation1']
+  myObj['recommendation2'] = rec['recommendation2']
+
   db.analytics.save(myObj)
 
   html ='<body style="font-family:sans-serif;">'
@@ -97,6 +105,7 @@ def predict():
   html += '</body>'
 
   return redirect('/dashboard')
+
 
 
 '''
@@ -136,4 +145,5 @@ if __name__ == '__main__':
   # Bind to PORT if defined, otherwise default to 5000.
   port = int(os.environ.get('PORT', 5000))
   model = pickle.load( open( '../model/predict-purchase', 'rb') )
+
   app.run(host='0.0.0.0', port=port)
