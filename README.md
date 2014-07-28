@@ -1,4 +1,3 @@
-customerAnalytics
+Sales360
 =================
-
-Customer Analytics
+Sales Intelligence platform predicting realtime conversion score with recommended services for a sales quote
