@@ -16,8 +16,8 @@ class RecommendationEngine(object):
 	def __init__(self):	
 		rec_data = "../data/train.csv"
 		data = ProcessData()
-		df_rec = data.getData(rec_data)
-		df_rec = data.cleanData(df_rec)
+		df_rec = data.get_data(rec_data)
+		df_rec = data.clean_data(df_rec)
 		df_rec = df_rec[df_rec.record_type ==1]
 		sf = SFrame(data=df_rec)
 		del df_rec # memory optimization

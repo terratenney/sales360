@@ -10,6 +10,7 @@ from random import randint
 import numpy as np
 import datetime
 from flask import Flask, render_template, request, redirect
+import datetime
 
 #import pymongo
  
@@ -44,6 +45,18 @@ def load():
   df_test = df_test.fillna(method = 'pad')
   df_test['costperperson'] = 1.0 * df.cost/df.group_size
 
+  scores = db.scores
+  states = df_test.state.unique()
+
+  for state in states:
+    df_test.loc[df_test.state == state,'fscore'] = 0
+    df_test.loc[df_test.state == state,'tscore'] = 0
+    rec = scores.find_one({'state': state},{'fscore': 1, 'tscore' :1})
+    if (rec['fscore']) :
+      df_test.loc[df.state == state,'fscore'] = rec['fscore']
+    if (rec['tscore']) :
+      df_test.loc[df.state == state,'tscore'] = rec['tscore']
+
   #pdb.set_trace()
   records = json.loads(df_test.T.to_json()).values()
   db.test.remove()
@@ -71,21 +84,21 @@ def predict():
     k,v = t
     collist.append(k)
     itemlist.append(v)
-    #df[k] =  
+
   df = pd.DataFrame(itemlist,collist)
-  #pdb.set_trace()
   df = df.T
   df.drop('_id', axis=1, inplace=True)
   df.drop('state', axis=1, inplace=True)
+  df.drop('fscore', axis=1, inplace=True)
+  df.drop('tscore', axis=1, inplace=True)
+
   X = np.array(df)
   y_pred = 0
   y_pred_proba= model.predict_proba(X)
-  #y_pred = model.predict(X)
   conversion_score = int((y_pred_proba[:,1])*100)
   myObj['conversion_score'] = conversion_score
   myObj['date_time'] = datetime.datetime.now().replace(microsecond=0)
   ## Add test recommendations for now and replace with trained model
-  #pdb.set_trace()
 
   recommendations = db.recs
 
@@ -115,20 +128,12 @@ Dashboard to check the Quote Status
 def dashboard():
   print "Viewing records"
   #pdb.set_trace()
-  cur = db.analytics.find().limit(8)
-  #cur = db.analytics.find().sort({ 'date_time' : -1 }).limit(8)
+  cur = db.analytics.find().limit(5)
+  #cur = db.analytics.find().sort({ datetime.datetime('date_time') : -1 }).limit(8)
 
-  quotes = cur[:]
-  # quote = quotes[1]
-  # date_t = str(quote['date_time'])
-  # customer_id = str(quote['customer_ID']) 
-  # loc = str(quote['location'])
-  # gz = str(quote['group_size'])
-  # risk_factor = str(quote['risk_factor'])
-  # conversion_score = str(quote['conversion_score'])
-  # df = pd.DataFrame.from_dict(quote, orient='index')
-  # data = df.T
-  return render_template('dashboard2.html',quotes=quotes)
+  quotes = cur[:10]
+
+  return render_template('dashboard3.html',quotes=quotes)
 
 '''
 Flush Dashboard to clean up the old records.
