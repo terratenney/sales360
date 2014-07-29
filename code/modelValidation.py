@@ -1,5 +1,5 @@
 """
-Description: Load and clean data from csv files.
+Description: Validate Model class and generate scores.
 """
 
 import numpy as np
@@ -11,7 +11,7 @@ from sklearn import metrics
 
 class ModelValidation(object):
     """
-    A class analyze model.
+    A class to validate model
     """
     def __init__(self):
         self.features = [] # list of features
@@ -36,6 +36,8 @@ class ModelValidation(object):
 
         fpr, tpr,thresholds = roc_curve(y_test, probas_[:, 1]) 
         roc_auc = auc(fpr, tpr)
+
+        # Print scores for the requested model for analysis.
         print("Area under the ROC curve : %f" % roc_auc)
         print "precision of model", metrics.precision_score(y_test, y_pred, average='weighted')
         print "f score of model", metrics.f1_score(y_test, y_pred, average='weighted') 
