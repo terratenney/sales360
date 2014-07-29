@@ -111,8 +111,8 @@ analytics collections include conversion score and recommendations.
 '''
 @app.route('/dashboard')
 def dashboard():
-  cur = db.analytics.find().limit(5)
-  #cur = db.analytics.find().sort({ datetime.datetime('date_time') : -1 }).limit(8)
+
+  cur = db.analytics.find().sort([("date_time", -1)]).limit(8)
 
   quotes = cur[:]
 
