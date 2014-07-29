@@ -6,14 +6,14 @@ import os
 from pymongo import Connection
 import pdb
 
-""" Customer Recommmendations"""
+"""
+Description: Recommendation for Customers about the possible services that they may buy
+based on the similar customer profiles from trained data
+
+"""
 
 def recommendCustomer():
-	"""
-	Description: Recommendation for Customers about the possible services that they may buy
-	based on the similar customer profiles from trained data
 
-	"""
 
 	re = RecommendationEngine()
 

@@ -6,8 +6,7 @@ from graphlab import recommender, SFrame, load_model
 import pdb
 
 """ 
-Reccommendation engine for upselling the services to the customer
-once the quote is created.
+Recommendation engine to compute similarity between each customers and return the recommendations.
 """
 class RecommendationEngine(object):
 	'''
