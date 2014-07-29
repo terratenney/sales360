@@ -12,13 +12,16 @@ from modelValidation import ModelValidation
 import os
 from pymongo import Connection
 
-""" Customer Analytics"""
+""" 
+Description: Customer Analytics is the main program to process data, clean data, featurize data.
+Run Crossvalidation on the models and compute the scores for further analysis.
+"""
 
 def customerAnalytics():
 	"""
 	Description: Purchase prediction based on the quote transactions and scores generated 
-	from social media like facebook and twitter. Integrate status of business based on BBB accredition
-
+	from social media like facebook and twitter. Since customer sentiment is derived from the number of followers
+	from that state. Keeping the scores at level at the moment due to the inability to compute much more detailed metrics.
 	"""
 	train_data = "../data/train.csv"
 	test_data = "../data/test_v2.csv"
@@ -26,27 +29,19 @@ def customerAnalytics():
 	data = ProcessData()
 	df_train = data.get_data(train_data)
 	df_train = data.clean_data(df_train)
-	#pdb.set_trace()
+
 	X,y= data.featurize_data(df_train, db)
 	del df_train # memory optimization
 
 
-	""" Build a Baseline Model """
+	#Build model and run validation
 
-	print "Running Random Forest Classifier ..."
 	clf = RandomForestClassifier(verbose=10, n_estimators=10, n_jobs=-1, max_features=5)
 	model = ModelValidation()
 	baselineclf = model.get_score(clf,X,y)
-	"""
-	Area under the ROC curve : 0.794343
-	precision of model 0.518552450756
-	f score of model 0.270716250149
-	recall of model 0.183171521036
 
 	"""
-
-	"""
-	Build a pickle for web app to start the purchase prediction
+	Build a pickle for web app to start the purchase prediction ( compute conversion scores)
 
 	"""
 	cp.dump(clf, open( 'predict-purchase', "wb"))
