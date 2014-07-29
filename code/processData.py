@@ -1,5 +1,5 @@
 """
-Description: Load and clean data from csv files.
+Description: Load and Process Data with method get_data, clean_data, set_features, get_features and featurize_data.
 """
 
 from collections import Counter
