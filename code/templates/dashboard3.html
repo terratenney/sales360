@@ -27,6 +27,7 @@
                 </div>
                 <div class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
+                        <li><a href="/dashboard">About</a></li>
                         <li><a href="/predict">Quote</a></li>
                   </ul>
                 </div>
@@ -42,8 +43,8 @@
                 <hr />
                 <div class="row">
                     <div class="col-md-6">
-                        <h5>Quote Transactions</h5>
-                        <table class="table table-striped table-bordered table-hover">
+                        <h5 align="center">Quote Transactions</h5>
+                        <table align="center" class="table table-striped table-bordered table-hover">
                            <thead>
 
                                 <tr>
@@ -109,14 +110,14 @@
                                 // Create and draw the visualization.
                                 // Original widh: 600 and height: 400
                                 new google.visualization.PieChart(document.getElementById('weekly')).
-                                    draw(data, {title:"Weekly quotes"});
+                                    draw(data, {title:"Weekly Quotes"});
                               }
                               
 
                               google.setOnLoadCallback(drawVisualization);
                             </script>
 
-                        <div id="weekly" style="width: 400px; height: 300px;"></div>
+                        <div id="weekly" align="center" style="width: 400px; height: 300px;"></div>
                       
                        </div>
 
@@ -148,14 +149,14 @@
                               
                                 // Create and draw the visualization.
                                 new google.visualization.PieChart(document.getElementById('cweekly')).
-                                    draw(data, {title:"Weekly conversion"});
+                                    draw(data, {title:"Weekly Conversions"});
                               }
                               
 
                               google.setOnLoadCallback(drawVisualization);
                             </script>
 
-                          <div id="cweekly" style="width: 400px; height: 300px;"></div>
+                          <div id="cweekly" align="center" style="width: 400px; height: 300px;"></div>
 
                         </div>
                         <!-- conversion in a week -->
@@ -181,13 +182,13 @@
                                     var data = new google.visualization.DataTable();
                                     data.addColumn('string', 'Category');
                                     data.addColumn('date', 'Date');
-                                    data.addColumn('number', 'Created');
+                                    data.addColumn('number', 'Counts');
                                     data.addColumn('number', 'Cost');
                                     data.addRows([
                                       ['Quotes',  new Date (2014,6,14), 140539, 89358921],
-                                      ['Conversion', new Date (2014,6,14), 18583,  11780994],
+                                      ['Conversions', new Date (2014,6,14), 18583,  11780994],
                                       ['Quotes',  new Date (2014,6,20), 977, 638601],
-                                      ['Conversion', new Date (2014,6,20), 119,  77247]
+                                      ['Conversions', new Date (2014,6,20), 119,  77247]
                                        ]);
                                   
                                     var motionchart = new google.visualization.MotionChart(
@@ -199,7 +200,7 @@
                                   google.setOnLoadCallback(drawVisualization);
                                 </script>
 
-                            <div id="conversion" style="width: 600px; height: 400px;"></div>
+                            <div id="conversion" align = "center" style="width: 600px; height: 400px;"></div>
                         </div>
                     </div>
 
@@ -223,7 +224,7 @@
                 </script>
                 <div class="row">
                     <div class="col-md-6">
-                      <h5>Customer Quotes</h5>
+                      <h5 align = "center">Customer Quotes</h5>
                     <script type="text/javascript" src="//www.google.com/jsapi"></script>
                       <script type="text/javascript">
                         google.load('visualization', '1', {packages: ['geomap']});
@@ -277,10 +278,10 @@
 
                         google.setOnLoadCallback(drawVisualization);
                       </script>
-                      <div id="visualization1" style="width: 800px; height: 400px;"></div>
+                      <div id="visualization1" align = "center" style="width: 800px; height: 400px;"></div>
                </div>
                <div class="col-md-6">
-                    <h5>Quote Conversion By Percentage</h5>
+                    <h5 align = "center">Conversions Percent</h5>
                       <script type="text/javascript">
                         google.load('visualization', '1', {packages: ['geomap']});
 
@@ -333,7 +334,7 @@
 
                         google.setOnLoadCallback(drawVisualization);
                       </script>
-                    <div id="conversion_heatmap" style="width: 800px; height: 400px;"></div>
+                    <div id="conversion_heatmap" align = "center" style="width: 800px; height: 400px;"></div>
                 </div>
                 <!-- column -->
               </div>
