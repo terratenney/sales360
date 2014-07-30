@@ -114,7 +114,7 @@ def dashboard():
 
   cur = db.analytics.find().sort([("date_time", -1)]).limit(8)
 
-  quotes = cur[:8]
+  quotes = cur[:10]
 
   return render_template('dashboard3.html',quotes=quotes)
 
